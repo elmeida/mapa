@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para minha princesa 🍄</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: url('https://img.itch.zone/aW1nLzg0OTkxNTIuZ2lm/original/FsQDYh.gif') no-repeat center center fixed;
+      background-size: cover;
+      image-rendering: pixelated;
+      font-family: 'Press Start 2P', cursive;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cartao {
+      background: rgba(255, 247, 192, 0.95);
+      border: 4px solid #ff5959;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 1rem;
+      box-shadow: 0 0 25px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 90%;
+      z-index: 10;
+      animation: aparecer 1s ease-out forwards;
+    }
+
+    h1 {
+      font-size: 1rem;
+      color: #d12a2a;
+      margin-bottom: 1.5rem;
+      animation: pular 1s ease-in-out infinite alternate;
+    }
+
+    .mensagem {
+      font-size: 0.8rem;
+      color: #333;
+      animation: fadeIn 2s ease-out forwards;
+    }
+
+    .emoji {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      animation: piscar 1.5s infinite alternate;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      background: #ffc600;
+      color: #333;
+      border: 3px solid #ff6f00;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.6rem;
+      cursor: pointer;
+      box-shadow: 0 5px #b22222;
+      transition: transform 0.2s;
+    }
+
+    button:active {
+      transform: translateY(-5px);
+    }
+
+    .flor {
+      font-size: 1rem;
+      display: none;
+      margin-top: 1.5rem;
+      animation: aparecer 0.5s ease-out forwards;
+      color: #d12a2a;
+    }
+
+    .cora {
+      position: absolute;
+      top: -50px;
+      font-size: 1.2rem;
+      animation: cair 5s linear infinite;
+      color: red;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    @keyframes aparecer {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pular {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes piscar {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(1.1); }
+    }
+
+    @keyframes cair {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 0.9rem; }
+      .mensagem { font-size: 0.7rem; }
+      .flor { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body onclick="ativarSom(); ativarTelaCheia();">
+
+  <!-- Trilha sonora do Mario (funcional) -->
+  <audio id="musica" preload="auto" loop>
+    <source src="https://vgmsite.com/soundtracks/super-mario-bros/uxemxjtr/01%20Title%20Screen.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Som de moeda -->
+  <audio id="somMoeda">
+    <source src="https://themushroomkingdom.net/sounds/wav/smb/smb_coin.wav" type="audio/wav">
+  </audio>
+
+  <div class="cartao">
+    <h1>💘 Yasmim, minha Chispa! 💘</h1>
+    <div class="mensagem">
+      Assim como o Mario atravessa mundos inteiros<br>
+      só pra salvar sua princesa...<br><br>
+      Eu enfrentaria qualquer fase só pra te ver sorrir ❤️<br><br>
+      Você é meu 💫Power-Up diário!
+    </div>
+    <div class="emoji">🍄⭐🎮</div>
+    <button onclick="mostrarFlor()">Clique para pegar a flor 🌸</button>
+    <div id="flor" class="flor">🌸 Uma flor do meu coração só pra você 🌸</div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function mostrarFlor() {
+      document.getElementById('flor').style.display = 'block';
+      document.getElementById('somMoeda').play();
+    }
+
+    function criarCoracao() {
+      const cora = document.createElement('div');
+      cora.classList.add('cora');
+      cora.textContent = '❤️';
+      cora.style.left = Math.random() * 100 + 'vw';
+      cora.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+      document.body.appendChild(cora);
+      setTimeout(() => cora.remove(), 5000);
+    }
+
+    setInterval(criarCoracao, 400);
+
+    function ativarTelaCheia() {
+      const doc = document.documentElement;
+      if (doc.requestFullscreen) doc.requestFullscreen();
+      else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
+      else if (doc.msRequestFullscreen) doc.msRequestFullscreen();
+    }
+
+    function ativarSom() {
+      const audio = document.getElementById("musica");
+      if (audio.paused) {
+        audio.play().catch(err => console.log("Autoplay bloqueado até interação."));
+      }
+    }
+  </script>
+</body>
+</html>
